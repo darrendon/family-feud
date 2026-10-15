@@ -152,25 +152,25 @@
       ]
     },
     {
-      "question": "Name the time you usually eat lunch.",
-      "source": "YouGov, 2025",
+      "question": "Name a Super Bowl halftime show from the last five years that you enjoyed the most.",
+      "source": "YouGov, 2026",
       "multiplier": 3,
       "answers": [
         {
-          "answer": "1:00",
-          "points": 20
+          "answer": "Bad Bunny",
+          "points": 15
         },
         {
-          "answer": "Noon",
-          "points": 17
+          "answer": "Dr. Dre, Snoop Dogg & Eminem",
+          "points": 13
         },
         {
-          "answer": "12:30",
-          "points": 14
+          "answer": "Kendrick Lamar",
+          "points": 9
         },
         {
-          "answer": "2:00",
-          "points": 12
+          "answer": "Rihanna",
+          "points": 8
         }
       ]
     }
