@@ -41,7 +41,7 @@ You can link straight to an episode with `?game=episode1` at the end of the site
 
 Each episode is a file in `games/`. Edit one on github.com with the pencil icon and commit; the site updates on its own.
 
-The survey numbers in Episode 1 are made up. For the real thing, send the questions around to friends who aren't playing and count up what they say.
+Episode 1 uses real public polls of Americans (YouGov and Gallup). The `source` on each question says which, and shows above the board. Those polls had people pick from a list rather than answer freely, so the board holds the top answers they reported. For more rounds, polls that ask people to pick one favorite work best, or send your own questions to friends who aren't playing.
 
 ```json
 {
@@ -77,6 +77,7 @@ The survey numbers in Episode 1 are made up. For the real thing, send the questi
 | --- | --- |
 | `rounds` | One entry per round, played in order |
 | `question` | The survey question shown above the board |
+| `source` | Optional, e.g. `"YouGov, 2020"`; replaces "We surveyed 100 people" above the board |
 | `answers` | Up to 8 answers, each with `answer` and `points`. They're sorted highest first for you |
 | `image`, `audio`, `video` | Optional, on a round or a Fast Money question: a file in `media/` (e.g. `"media/logo.png"`) or a link, shown with the question |
 | `fastMoney` | Optional. Leave it out to skip Fast Money |

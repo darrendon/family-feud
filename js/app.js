@@ -752,7 +752,7 @@ function renderRound() {
       ${teamPanel(0)}
       <section class="board-wrap">
         <div class="survey">
-          <span class="survey-label">We surveyed 100 people</span>
+          <span class="survey-label">${rd.source ? `Survey · ${esc(rd.source)}` : "We surveyed 100 people"}</span>
           <div class="survey-q">${esc(rd.question)}</div>
           ${renderMedia(rd)}
         </div>
