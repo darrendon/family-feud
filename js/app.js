@@ -4,7 +4,8 @@ import { playSound, playSoundLater, stopMusic, toggleMute, isMuted, mediaUrl } f
 // Rules
 // ---------------------------------------------------------------------------
 
-const MAX_ANSWERS = 8; // slots on the board
+const MAX_ANSWERS = 12; // most answers a board can hold
+const MIN_SLOTS = 8; // the board always shows at least this many slots, like the show
 const MAX_STRIKES = 3;
 const FM_QUESTIONS = 5;
 const FM_GOAL = 200; // Fast Money target, unless the game file sets "goal"
@@ -705,7 +706,7 @@ function answerSlot(i, answers) {
   const r = state.round;
   if (i >= answers.length) return `<div class="slot blank"></div>`;
   if (!r.revealed[i])
-    return `<button class="slot hidden" data-action="revealAnswer" data-i="${i}" title="Reveal (${i + 1})"><span class="slot-num">${i + 1}</span></button>`;
+    return `<button class="slot hidden" data-action="revealAnswer" data-i="${i}" title="${i < 10 ? `Reveal (${(i + 1) % 10})` : "Reveal"}"><span class="slot-num">${i + 1}</span></button>`;
   const a = answers[i];
   return `<div class="slot open ${r.late[i] ? "late" : ""} ${flipIndex === i ? "flip" : ""}">
     <span class="slot-text">${esc(a.answer)}</span>
@@ -742,7 +743,8 @@ function hostControls() {
 function renderRound() {
   const rd = currentRound();
   const r = state.round;
-  const slots = Array.from({ length: MAX_ANSWERS }, (_, i) => answerSlot(i, rd.answers)).join("");
+  const count = Math.max(MIN_SLOTS, rd.answers.length + (rd.answers.length % 2)); // two even columns
+  const slots = Array.from({ length: count }, (_, i) => answerSlot(i, rd.answers)).join("");
   return `<main class="screen round phase-${r.phase}">
     ${topbar(
       `<div class="eyebrow">Round ${state.roundIndex + 1} of ${state.game.rounds.length}</div>`,
@@ -757,7 +759,7 @@ function renderRound() {
           ${renderMedia(rd)}
         </div>
         <div class="bank"><span>${r.bank}</span></div>
-        <div class="board">${slots}</div>
+        <div class="board" style="--rows:${count / 2}">${slots}</div>
       </section>
       ${teamPanel(1)}
     </div>
@@ -918,7 +920,7 @@ function renderPicker() {
       ${q.answers
         .map(
           (a, i) => `<button class="pick" data-action="pickFm" data-idx="${i}">
-            <kbd>${i + 1}</kbd><span>${esc(a.answer)}</span>${p1 && p1.match === i ? `<em>Player 1</em>` : ""}<b>${a.points}</b>
+            <kbd>${i < 9 ? i + 1 : "·"}</kbd><span>${esc(a.answer)}</span>${p1 && p1.match === i ? `<em>Player 1</em>` : ""}<b>${a.points}</b>
           </button>`
         )
         .join("")}
@@ -1004,7 +1006,8 @@ document.addEventListener("keydown", (e) => {
 
   if (state.screen === "round") {
     const r = state.round;
-    if (/^[1-8]$/.test(key)) return revealAnswer(Number(key) - 1);
+    if (/^[1-9]$/.test(key)) return revealAnswer(Number(key) - 1);
+    if (key === "0") return revealAnswer(9);
     if (key === "x") return strike();
     if (r.phase === "faceoff" && key === "ArrowLeft") return giveControl(0);
     if (r.phase === "faceoff" && key === "ArrowRight") return giveControl(1);
@@ -1035,7 +1038,7 @@ document.addEventListener("keydown", (e) => {
   }
   if (state.screen === "fm" && (fm.phase === "r1" || fm.phase === "r2")) {
     if (fm.sel >= 0) {
-      if (/^[1-8]$/.test(key)) return pickFm(Number(key) - 1);
+      if (/^[1-9]$/.test(key)) return pickFm(Number(key) - 1);
       if (key === "0") return pickFm(-1);
       if (key === "p") return pickFm(-2);
     } else if (space) {

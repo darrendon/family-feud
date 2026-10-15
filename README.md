@@ -26,7 +26,7 @@ Points count at face value in every round.
 
 ### Host shortcuts
 
-- **1–8:** reveal that answer on the board (or pick it in Fast Money)
+- **1–9, 0:** reveal that answer on the board (0 is the 10th; click anything past that). In Fast Money, 1–9 picks an answer and 0 is not on the board
 - **X:** red X / strike / steal fails
 - **← / →:** in the face-off, the left or right team plays
 - **Space:** next round, start or pause the Fast Money clock, continue
@@ -78,7 +78,7 @@ Episode 1 uses real public polls of Americans (YouGov and Gallup). The `source` 
 | `rounds` | One entry per round, played in order |
 | `question` | The survey question shown above the board |
 | `source` | Optional, e.g. `"YouGov, 2020"`; replaces "We surveyed 100 people" above the board |
-| `answers` | Up to 8 answers, each with `answer` and `points`. They're sorted highest first for you |
+| `answers` | Up to 12 answers, each with `answer` and `points`. They're sorted highest first for you, and the board grows past 8 slots when it needs to |
 | `image`, `audio`, `video` | Optional, on a round or a Fast Money question: a file in `media/` (e.g. `"media/logo.png"`) or a link, shown with the question |
 | `fastMoney` | Optional. Leave it out to skip Fast Money |
 | `fastMoney.questions` | Exactly 5, each with its own `answers` |

@@ -603,7 +603,7 @@ input:focus {
 .board {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: repeat(4, auto);
+  grid-template-rows: repeat(var(--rows, 4), auto);
   grid-auto-flow: column;
   gap: 0.5rem;
   padding: 0.7rem;
@@ -622,6 +622,15 @@ input:focus {
   align-items: center;
   font-family: "Oswald", sans-serif;
   position: relative;
+}
+
+/* Bigger boards get shorter tiles so they still fit on a TV */
+.board[style*="--rows:5"] .slot {
+  height: 2.65rem;
+}
+
+.board[style*="--rows:6"] .slot {
+  height: 2.3rem;
 }
 
 .slot.blank {

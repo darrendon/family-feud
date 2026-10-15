@@ -2,6 +2,52 @@
   "title": "Episode 1",
   "rounds": [
     {
+      "question": "Name your favorite Halloween candy.",
+      "source": "Rutgers-Eagleton Poll (NJ), 2025",
+      "answers": [
+        {
+          "answer": "Reese's",
+          "points": 21
+        },
+        {
+          "answer": "Snickers",
+          "points": 11
+        },
+        {
+          "answer": "Candy corn",
+          "points": 9
+        },
+        {
+          "answer": "Kit Kat",
+          "points": 7
+        },
+        {
+          "answer": "Twix",
+          "points": 6
+        },
+        {
+          "answer": "Chocolate",
+          "points": 6
+        },
+        {
+          "answer": "M&M's",
+          "points": 4
+        },
+        {
+          "answer": "Hershey's",
+          "points": 3
+        },
+        {
+          "answer": "Milky Way",
+          "points": 3
+        },
+        {
+          "answer": "Butterfinger",
+          "points": 2
+        }
+      ]
+    },
+    {
       "question": "Name your favorite color.",
       "source": "YouGov, 2014",
       "answers": [
@@ -36,110 +82,140 @@
         {
           "answer": "Orange",
           "points": 3
-        }
-      ]
-    },
-    {
-      "question": "Name your favorite flavor of ice cream.",
-      "source": "YouGov, 2020",
-      "answers": [
-        {
-          "answer": "Chocolate",
-          "points": 17
         },
         {
-          "answer": "Vanilla",
-          "points": 15
+          "answer": "White",
+          "points": 2
         },
         {
-          "answer": "Strawberry",
-          "points": 8
-        },
-        {
-          "answer": "Mint chocolate chip",
-          "points": 8
-        },
-        {
-          "answer": "Butter pecan",
-          "points": 8
-        },
-        {
-          "answer": "Cookie dough",
-          "points": 6
-        },
-        {
-          "answer": "Cookies 'n cream",
-          "points": 6
+          "answer": "Brown",
+          "points": 2
         }
       ]
     },
     {
       "question": "Name your favorite pizza topping.",
-      "source": "YouGov, 2023",
+      "source": "Public Policy Polling, 2013",
       "answers": [
         {
           "answer": "Pepperoni",
-          "points": 24
-        },
-        {
-          "answer": "Sausage",
-          "points": 13
-        },
-        {
-          "answer": "Extra cheese",
-          "points": 11
+          "points": 27
         },
         {
           "answer": "Mushrooms",
-          "points": 9
-        }
-      ]
-    },
-    {
-      "question": "Name your favorite Christmas movie.",
-      "source": "YouGov, 2020",
-      "answers": [
-        {
-          "answer": "Home Alone",
-          "points": 15
+          "points": 14
         },
         {
-          "answer": "It's a Wonderful Life",
+          "answer": "Sausage",
           "points": 12
         },
         {
-          "answer": "Christmas Vacation",
-          "points": 12
+          "answer": "Bacon",
+          "points": 10
         },
         {
-          "answer": "Elf",
-          "points": 12
+          "answer": "Chicken",
+          "points": 7
         },
         {
-          "answer": "A Christmas Story",
-          "points": 11
+          "answer": "Green pepper",
+          "points": 7
+        },
+        {
+          "answer": "Olives",
+          "points": 7
+        },
+        {
+          "answer": "Plain cheese",
+          "points": 5
+        },
+        {
+          "answer": "Onion",
+          "points": 3
         }
       ]
     },
     {
       "question": "Name your favorite sport to watch.",
-      "source": "Gallup, 2026",
+      "source": "Gallup, 2004",
       "answers": [
         {
           "answer": "Football",
-          "points": 31
+          "points": 37
         },
         {
           "answer": "Basketball",
-          "points": 11
+          "points": 13
         },
         {
           "answer": "Baseball",
           "points": 10
         },
         {
+          "answer": "Auto racing",
+          "points": 5
+        },
+        {
+          "answer": "Figure skating",
+          "points": 4
+        },
+        {
+          "answer": "Ice hockey",
+          "points": 3
+        },
+        {
+          "answer": "Golf",
+          "points": 2
+        },
+        {
+          "answer": "Tennis",
+          "points": 2
+        },
+        {
           "answer": "Soccer",
+          "points": 2
+        }
+      ]
+    },
+    {
+      "question": "Name your favorite brand of beer.",
+      "source": "Public Policy Polling, 2013",
+      "answers": [
+        {
+          "answer": "Budweiser",
+          "points": 15
+        },
+        {
+          "answer": "Corona",
           "points": 9
+        },
+        {
+          "answer": "Miller",
+          "points": 8
+        },
+        {
+          "answer": "Sam Adams",
+          "points": 8
+        },
+        {
+          "answer": "Coors",
+          "points": 7
+        },
+        {
+          "answer": "Heineken",
+          "points": 7
+        },
+        {
+          "answer": "Busch",
+          "points": 3
+        },
+        {
+          "answer": "Pabst Blue Ribbon",
+          "points": 2
+        },
+        {
+          "answer": "Natural Light",
+          "points": 1
         }
       ]
     }
@@ -152,23 +228,19 @@
     ],
     "questions": [
       {
-        "question": "Name your favorite season.",
-        "source": "Gallup, 2005",
+        "question": "Name your favorite meal of the day.",
+        "source": "Public Policy Polling, 2013",
         "answers": [
           {
-            "answer": "Spring",
-            "points": 36
+            "answer": "Dinner",
+            "points": 52
           },
           {
-            "answer": "Fall",
-            "points": 27
+            "answer": "Breakfast",
+            "points": 29
           },
           {
-            "answer": "Summer",
-            "points": 25
-          },
-          {
-            "answer": "Winter",
+            "answer": "Lunch",
             "points": 11
           }
         ]
@@ -188,6 +260,28 @@
           {
             "answer": "Sunday",
             "points": 9
+          }
+        ]
+      },
+      {
+        "question": "Name your favorite season.",
+        "source": "Gallup, 2005",
+        "answers": [
+          {
+            "answer": "Spring",
+            "points": 36
+          },
+          {
+            "answer": "Fall",
+            "points": 27
+          },
+          {
+            "answer": "Summer",
+            "points": 25
+          },
+          {
+            "answer": "Winter",
+            "points": 11
           }
         ]
       },
@@ -224,44 +318,50 @@
             "points": 5
           },
           {
+            "answer": "Green",
+            "points": 4
+          },
+          {
             "answer": "White",
             "points": 4
-          }
-        ]
-      },
-      {
-        "question": "Name your favorite day of the week.",
-        "source": "YouGov, 2021",
-        "answers": [
-          {
-            "answer": "Saturday",
-            "points": 35
           },
           {
-            "answer": "Friday",
-            "points": 29
-          },
-          {
-            "answer": "Sunday",
-            "points": 14
-          }
-        ]
-      },
-      {
-        "question": "Name something people do when trick-or-treaters ring the doorbell.",
-        "source": "YouGov, 2021",
-        "answers": [
-          {
-            "answer": "Give out candy",
-            "points": 63
-          },
-          {
-            "answer": "Pretend no one's home",
-            "points": 21
-          },
-          {
-            "answer": "Answer but give nothing",
+            "answer": "Blue",
             "points": 2
+          }
+        ]
+      },
+      {
+        "question": "Name your favorite Thanksgiving pie.",
+        "source": "Public Policy Polling, 2015",
+        "answers": [
+          {
+            "answer": "Pumpkin",
+            "points": 27
+          },
+          {
+            "answer": "Apple",
+            "points": 17
+          },
+          {
+            "answer": "Pecan",
+            "points": 17
+          },
+          {
+            "answer": "Sweet potato",
+            "points": 6
+          },
+          {
+            "answer": "Chocolate",
+            "points": 6
+          },
+          {
+            "answer": "Blueberry",
+            "points": 5
+          },
+          {
+            "answer": "Cherry",
+            "points": 5
           }
         ]
       }
