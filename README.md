@@ -40,7 +40,7 @@ Click the board once after it opens so the browser lets it play sound. The sound
 
 ### Host shortcuts
 
-- **1–9, 0:** reveal that answer on the board (0 is the 10th; click anything past that). In Fast Money, 1–9 picks an answer and 0 is not on the board
+- **1–8:** reveal that answer on the board. In Fast Money, the number picks an answer and 0 is not on the board
 - **X:** red X / strike / steal fails
 - **Q:** show or hide the question on the board
 - **← / →:** in the face-off, the left or right team plays
@@ -94,7 +94,7 @@ Episode 1 uses real public polls from 2024–2026 (YouGov, Gallup, High Point Un
 | `question` | The survey question shown above the board |
 | `source` | Optional, e.g. `"YouGov, 2020"`; replaces "We surveyed 100 people" above the board |
 | `multiplier` | Optional, on a round: `2` for double points, `3` for triple. Leave it out for face value |
-| `answers` | Up to 12 answers, each with `answer` and `points`. They're sorted highest first for you, and the board grows past 8 slots when it needs to |
+| `answers` | Up to 8 answers, each with `answer` and `points`. They're sorted highest first for you |
 | `image`, `audio`, `video` | Optional, on a round or a Fast Money question: a file in `media/` (e.g. `"media/logo.png"`) or a link, shown with the question |
 | `fastMoney` | Optional. Leave it out to skip Fast Money |
 | `fastMoney.questions` | Exactly 5, each with its own `answers` |

@@ -4,7 +4,7 @@ import { playSound, stopMusic, toggleMute, setMuted, isMuted, mediaUrl } from ".
 // Rules
 // ---------------------------------------------------------------------------
 
-const MAX_ANSWERS = 12; // most answers a board can hold
+const MAX_ANSWERS = 8; // most answers a board can hold
 const MIN_SLOTS = 8; // the board always shows at least this many slots, like the show
 const MAX_STRIKES = 3;
 const FM_QUESTIONS = 5;

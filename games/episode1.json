@@ -7,19 +7,19 @@
       "answers": [
         {
           "answer": "Reese's",
-          "points": 21
+          "points": 23
         },
         {
           "answer": "Snickers",
-          "points": 11
+          "points": 12
         },
         {
           "answer": "Candy corn",
-          "points": 9
+          "points": 10
         },
         {
           "answer": "Kit Kat",
-          "points": 7
+          "points": 8
         },
         {
           "answer": "Twix",
@@ -36,14 +36,6 @@
         {
           "answer": "Hershey's",
           "points": 3
-        },
-        {
-          "answer": "Milky Way",
-          "points": 3
-        },
-        {
-          "answer": "Butterfinger",
-          "points": 2
         }
       ]
     },
@@ -53,15 +45,15 @@
       "answers": [
         {
           "answer": "Pumpkin",
-          "points": 28
+          "points": 29
         },
         {
           "answer": "Apple",
-          "points": 16
+          "points": 17
         },
         {
           "answer": "Pecan",
-          "points": 14
+          "points": 15
         },
         {
           "answer": "Sweet potato",
@@ -82,14 +74,6 @@
         {
           "answer": "Blueberry",
           "points": 3
-        },
-        {
-          "answer": "Strawberry",
-          "points": 2
-        },
-        {
-          "answer": "Peach",
-          "points": 1
         }
       ]
     },
@@ -100,7 +84,7 @@
       "answers": [
         {
           "answer": "Football",
-          "points": 32
+          "points": 33
         },
         {
           "answer": "Basketball",
@@ -129,49 +113,6 @@
         {
           "answer": "MMA",
           "points": 2
-        },
-        {
-          "answer": "Golf",
-          "points": 1
-        }
-      ]
-    },
-    {
-      "question": "Name your favorite month of the year.",
-      "source": "YouGov, 2025",
-      "multiplier": 3,
-      "answers": [
-        {
-          "answer": "October",
-          "points": 17
-        },
-        {
-          "answer": "December",
-          "points": 14
-        },
-        {
-          "answer": "May",
-          "points": 12
-        },
-        {
-          "answer": "June",
-          "points": 12
-        },
-        {
-          "answer": "April",
-          "points": 10
-        },
-        {
-          "answer": "July",
-          "points": 10
-        },
-        {
-          "answer": "September",
-          "points": 7
-        },
-        {
-          "answer": "November",
-          "points": 6
         }
       ]
     },
@@ -209,6 +150,29 @@
           "points": 2
         }
       ]
+    },
+    {
+      "question": "Name the time you usually eat lunch.",
+      "source": "YouGov, 2025",
+      "multiplier": 3,
+      "answers": [
+        {
+          "answer": "1:00",
+          "points": 20
+        },
+        {
+          "answer": "Noon",
+          "points": 17
+        },
+        {
+          "answer": "12:30",
+          "points": 14
+        },
+        {
+          "answer": "2:00",
+          "points": 12
+        }
+      ]
     }
   ],
   "fastMoney": {
@@ -219,20 +183,24 @@
     ],
     "questions": [
       {
-        "question": "Name your favorite meal of the day.",
+        "question": "Besides yourself, name someone who makes your meals.",
         "source": "YouGov, 2025",
         "answers": [
           {
-            "answer": "Dinner",
-            "points": 50
+            "answer": "Spouse / partner",
+            "points": 54
           },
           {
-            "answer": "Breakfast",
-            "points": 23
+            "answer": "Parents",
+            "points": 26
           },
           {
-            "answer": "Lunch",
-            "points": 19
+            "answer": "Roommate",
+            "points": 5
+          },
+          {
+            "answer": "Kids",
+            "points": 4
           }
         ]
       },
