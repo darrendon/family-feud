@@ -213,28 +213,40 @@
         ]
       },
       {
-        "question": "Name a place where people usually eat dinner at home.",
+        "question": "Name the decade with the best movies.",
         "source": "YouGov, 2025",
         "answers": [
           {
-            "answer": "At the table",
-            "points": 51
+            "answer": "1980s",
+            "points": 18
           },
           {
-            "answer": "Couch / recliner",
-            "points": 25
+            "answer": "1990s",
+            "points": 17
           },
           {
-            "answer": "Kitchen counter",
+            "answer": "2000s",
+            "points": 12
+          },
+          {
+            "answer": "1970s",
+            "points": 10
+          },
+          {
+            "answer": "2020s",
+            "points": 8
+          },
+          {
+            "answer": "2010s",
             "points": 7
           },
           {
-            "answer": "In bed",
-            "points": 7
+            "answer": "1960s",
+            "points": 4
           },
           {
-            "answer": "At a desk",
-            "points": 5
+            "answer": "1950s",
+            "points": 3
           }
         ]
       },
@@ -261,32 +273,40 @@
         ]
       },
       {
-        "question": "Name something people are most thankful for.",
-        "source": "YouGov, 2025",
+        "question": "Name what your biggest regret in life is about.",
+        "source": "YouGov, 2026",
         "answers": [
           {
-            "answer": "Family and friends",
-            "points": 51
+            "answer": "No regrets!",
+            "points": 22
           },
           {
-            "answer": "Health",
-            "points": 20
+            "answer": "Love / romance",
+            "points": 15
           },
           {
-            "answer": "Faith",
+            "answer": "Career / work",
+            "points": 10
+          },
+          {
+            "answer": "Family",
             "points": 8
           },
           {
-            "answer": "The United States",
+            "answer": "Money",
+            "points": 7
+          },
+          {
+            "answer": "Education",
+            "points": 6
+          },
+          {
+            "answer": "Kids",
+            "points": 5
+          },
+          {
+            "answer": "Health",
             "points": 4
-          },
-          {
-            "answer": "Job",
-            "points": 3
-          },
-          {
-            "answer": "Money / finances",
-            "points": 3
           }
         ]
       },
