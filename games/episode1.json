@@ -48,173 +48,177 @@
       ]
     },
     {
-      "question": "Name your favorite color.",
-      "source": "YouGov, 2014",
+      "question": "Name your favorite holiday pie.",
+      "source": "High Point University Poll, 2025",
       "answers": [
         {
-          "answer": "Blue",
-          "points": 31
+          "answer": "Pumpkin",
+          "points": 28
         },
         {
-          "answer": "Green",
-          "points": 15
+          "answer": "Apple",
+          "points": 16
         },
         {
-          "answer": "Purple",
+          "answer": "Pecan",
           "points": 14
         },
         {
-          "answer": "Red",
-          "points": 12
-        },
-        {
-          "answer": "Black",
-          "points": 9
-        },
-        {
-          "answer": "Pink",
-          "points": 5
-        },
-        {
-          "answer": "Yellow",
-          "points": 4
-        },
-        {
-          "answer": "Orange",
-          "points": 3
-        },
-        {
-          "answer": "White",
-          "points": 2
-        },
-        {
-          "answer": "Brown",
-          "points": 2
-        }
-      ]
-    },
-    {
-      "question": "Name your favorite pizza topping.",
-      "source": "Public Policy Polling, 2013",
-      "answers": [
-        {
-          "answer": "Pepperoni",
-          "points": 27
-        },
-        {
-          "answer": "Mushrooms",
-          "points": 14
-        },
-        {
-          "answer": "Sausage",
-          "points": 12
-        },
-        {
-          "answer": "Bacon",
+          "answer": "Sweet potato",
           "points": 10
         },
         {
-          "answer": "Chicken",
-          "points": 7
+          "answer": "Chocolate",
+          "points": 10
         },
         {
-          "answer": "Green pepper",
-          "points": 7
-        },
-        {
-          "answer": "Olives",
-          "points": 7
-        },
-        {
-          "answer": "Plain cheese",
+          "answer": "Cherry",
           "points": 5
         },
         {
-          "answer": "Onion",
+          "answer": "Key lime",
           "points": 3
+        },
+        {
+          "answer": "Blueberry",
+          "points": 3
+        },
+        {
+          "answer": "Strawberry",
+          "points": 2
+        },
+        {
+          "answer": "Peach",
+          "points": 1
         }
       ]
     },
     {
       "question": "Name your favorite sport to watch.",
-      "source": "Gallup, 2004",
+      "source": "Gallup, 2026",
       "answers": [
         {
           "answer": "Football",
-          "points": 37
+          "points": 31
         },
         {
           "answer": "Basketball",
-          "points": 13
+          "points": 11
         },
         {
           "answer": "Baseball",
           "points": 10
         },
         {
-          "answer": "Auto racing",
-          "points": 5
-        },
-        {
-          "answer": "Figure skating",
-          "points": 4
+          "answer": "Soccer",
+          "points": 9
         },
         {
           "answer": "Ice hockey",
-          "points": 3
+          "points": 4
+        },
+        {
+          "answer": "Volleyball",
+          "points": 2
+        },
+        {
+          "answer": "Auto racing",
+          "points": 2
+        },
+        {
+          "answer": "MMA",
+          "points": 2
         },
         {
           "answer": "Golf",
-          "points": 2
+          "points": 1
+        },
+        {
+          "answer": "Wrestling",
+          "points": 1
+        },
+        {
+          "answer": "Figure skating",
+          "points": 1
         },
         {
           "answer": "Tennis",
-          "points": 2
-        },
-        {
-          "answer": "Soccer",
-          "points": 2
+          "points": 1
         }
       ]
     },
     {
-      "question": "Name your favorite brand of beer.",
-      "source": "Public Policy Polling, 2013",
+      "question": "Name your favorite kind of horror movie.",
+      "source": "YouGov, 2024",
       "answers": [
         {
-          "answer": "Budweiser",
+          "answer": "Psychological",
+          "points": 18
+        },
+        {
+          "answer": "Comedy horror",
           "points": 15
         },
         {
-          "answer": "Corona",
-          "points": 9
+          "answer": "Supernatural",
+          "points": 11
         },
         {
-          "answer": "Miller",
-          "points": 8
-        },
-        {
-          "answer": "Sam Adams",
-          "points": 8
-        },
-        {
-          "answer": "Coors",
+          "answer": "Vampire",
           "points": 7
         },
         {
-          "answer": "Heineken",
-          "points": 7
+          "answer": "Monster",
+          "points": 5
         },
         {
-          "answer": "Busch",
+          "answer": "Zombie",
+          "points": 5
+        },
+        {
+          "answer": "Slasher",
+          "points": 4
+        },
+        {
+          "answer": "Witchcraft",
           "points": 3
+        }
+      ]
+    },
+    {
+      "question": "Dog owners: name a word for your relationship to your dog.",
+      "source": "YouGov, 2025",
+      "answers": [
+        {
+          "answer": "Best friend",
+          "points": 26
         },
         {
-          "answer": "Pabst Blue Ribbon",
+          "answer": "Parent",
+          "points": 23
+        },
+        {
+          "answer": "Companion",
+          "points": 16
+        },
+        {
+          "answer": "Owner",
+          "points": 13
+        },
+        {
+          "answer": "Friend",
+          "points": 12
+        },
+        {
+          "answer": "Master",
+          "points": 4
+        },
+        {
+          "answer": "Roommate",
           "points": 2
         },
         {
-          "answer": "Natural Light",
+          "answer": "Servant",
           "points": 1
         }
       ]
@@ -229,139 +233,119 @@
     "questions": [
       {
         "question": "Name your favorite meal of the day.",
-        "source": "Public Policy Polling, 2013",
+        "source": "YouGov, 2025",
         "answers": [
           {
             "answer": "Dinner",
-            "points": 52
+            "points": 50
           },
           {
             "answer": "Breakfast",
-            "points": 29
+            "points": 23
           },
           {
             "answer": "Lunch",
-            "points": 11
+            "points": 19
           }
         ]
       },
       {
-        "question": "Name your least favorite day of the week.",
-        "source": "YouGov, 2021",
+        "question": "Name a place where people usually eat dinner at home.",
+        "source": "YouGov, 2025",
         "answers": [
           {
-            "answer": "Monday",
-            "points": 58
+            "answer": "At the table",
+            "points": 51
           },
           {
-            "answer": "Tuesday",
-            "points": 12
+            "answer": "Couch / recliner",
+            "points": 25
           },
           {
-            "answer": "Sunday",
-            "points": 9
+            "answer": "Kitchen counter",
+            "points": 7
+          },
+          {
+            "answer": "In bed",
+            "points": 7
+          },
+          {
+            "answer": "At a desk",
+            "points": 5
           }
         ]
       },
       {
         "question": "Name your favorite season.",
-        "source": "Gallup, 2005",
+        "source": "YouGov, 2026",
         "answers": [
           {
-            "answer": "Spring",
-            "points": 36
+            "answer": "Fall",
+            "points": 32
           },
           {
-            "answer": "Fall",
-            "points": 27
+            "answer": "Spring",
+            "points": 28
           },
           {
             "answer": "Summer",
-            "points": 25
+            "points": 26
           },
           {
             "answer": "Winter",
-            "points": 11
+            "points": 10
           }
         ]
       },
       {
-        "question": "Name the color you like the least.",
-        "source": "YouGov, 2014",
+        "question": "Name something people are most thankful for.",
+        "source": "YouGov, 2025",
         "answers": [
           {
-            "answer": "Pink",
-            "points": 18
+            "answer": "Family and friends",
+            "points": 51
           },
           {
-            "answer": "Brown",
+            "answer": "Health",
+            "points": 20
+          },
+          {
+            "answer": "Faith",
+            "points": 8
+          },
+          {
+            "answer": "The United States",
+            "points": 4
+          },
+          {
+            "answer": "Job",
+            "points": 3
+          },
+          {
+            "answer": "Money / finances",
+            "points": 3
+          }
+        ]
+      },
+      {
+        "question": "Name your favorite part of the Super Bowl broadcast.",
+        "source": "YouGov, 2025",
+        "answers": [
+          {
+            "answer": "The game",
+            "points": 30
+          },
+          {
+            "answer": "The commercials",
             "points": 17
           },
           {
-            "answer": "Orange",
-            "points": 15
+            "answer": "The halftime show",
+            "points": 16
           },
           {
-            "answer": "Yellow",
-            "points": 11
-          },
-          {
-            "answer": "Purple",
-            "points": 6
-          },
-          {
-            "answer": "Red",
-            "points": 5
-          },
-          {
-            "answer": "Black",
-            "points": 5
-          },
-          {
-            "answer": "Green",
-            "points": 4
-          },
-          {
-            "answer": "White",
-            "points": 4
-          },
-          {
-            "answer": "Blue",
+            "answer": "The announcers",
             "points": 2
-          }
-        ]
-      },
-      {
-        "question": "Name your favorite Thanksgiving pie.",
-        "source": "Public Policy Polling, 2015",
-        "answers": [
-          {
-            "answer": "Pumpkin",
-            "points": 27
-          },
-          {
-            "answer": "Apple",
-            "points": 17
-          },
-          {
-            "answer": "Pecan",
-            "points": 17
-          },
-          {
-            "answer": "Sweet potato",
-            "points": 6
-          },
-          {
-            "answer": "Chocolate",
-            "points": 6
-          },
-          {
-            "answer": "Blueberry",
-            "points": 5
-          },
-          {
-            "answer": "Cherry",
-            "points": 5
           }
         ]
       }

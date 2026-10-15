@@ -41,7 +41,7 @@ You can link straight to an episode with `?game=episode1` at the end of the site
 
 Each episode is a file in `games/`. Edit one on github.com with the pencil icon and commit; the site updates on its own.
 
-Episode 1 uses real public polls of Americans (YouGov and Gallup). The `source` on each question says which, and shows above the board. Those polls had people pick from a list rather than answer freely, so the board holds the top answers they reported. For more rounds, polls that ask people to pick one favorite work best, or send your own questions to friends who aren't playing.
+Episode 1 uses real public polls from 2024–2026 (YouGov, Gallup, High Point University and Rutgers-Eagleton). The `source` on each question says which, and shows above the board. Most of those polls had people pick from a list, and catch-all answers like "other" or "none" are left off, so a board adds up to less than 100. For more rounds, polls that ask people to pick one favorite work best; YouGov's daily questions publish every answer. Or send your own questions to friends who aren't playing.
 
 ```json
 {
