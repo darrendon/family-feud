@@ -96,6 +96,7 @@
     {
       "question": "Name your favorite sport to watch.",
       "source": "Gallup, 2026",
+      "multiplier": 2,
       "answers": [
         {
           "answer": "Football",
@@ -138,6 +139,7 @@
     {
       "question": "Name your favorite month of the year.",
       "source": "YouGov, 2025",
+      "multiplier": 3,
       "answers": [
         {
           "answer": "October",
@@ -192,6 +194,7 @@
     {
       "question": "Dog owners: name a word for your relationship to your dog.",
       "source": "YouGov, 2025",
+      "multiplier": 3,
       "answers": [
         {
           "answer": "Best friend",

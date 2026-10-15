@@ -104,6 +104,10 @@ const teamName = (i) => (state.teams[i].name || "").trim() || `Team ${i + 1}`;
 const plural = (i) => /s$/i.test(teamName(i));
 const wins = (i) => (plural(i) ? "win" : "wins");
 const currentRound = () => state.game.rounds[state.roundIndex];
+// Later rounds can be worth double or triple: the bank counts each answer's points that many times.
+const multiplierOf = (round) => round.multiplier || 1;
+const MULTIPLIER_NAMES = { 2: "Double", 3: "Triple" };
+const multiplierLabel = (m) => `${MULTIPLIER_NAMES[m] || `${m}×`} points`;
 const isLastRound = () => state.roundIndex >= state.game.rounds.length - 1;
 const fmGoal = () => Number(state.game.fastMoney?.goal) || FM_GOAL;
 const fmSeconds = (p) => Number(state.game.fastMoney?.seconds?.[p]) || FM_SECONDS[p];
@@ -142,6 +146,8 @@ function validateGame(g) {
   if (!g || !Array.isArray(g.rounds) || g.rounds.length === 0) throw new Error('The file needs a "rounds" list.');
   g.rounds.forEach((r, i) => {
     if (!r.question) throw new Error(`Round ${i + 1} needs a "question".`);
+    if (r.multiplier !== undefined && !(Number.isInteger(r.multiplier) && r.multiplier >= 1))
+      throw new Error(`Round ${i + 1}: "multiplier" should be a whole number like 2 or 3.`);
     r.answers = checkAnswers(r.answers, `Round ${i + 1}`);
   });
   if (g.fastMoney) {
@@ -190,7 +196,7 @@ function revealAnswer(i) {
     r.late[i] = true; // just showing what was left; no points
     return render();
   }
-  r.bank += currentRound().answers[i].points;
+  r.bank += currentRound().answers[i].points * multiplierOf(currentRound());
   if (r.phase === "steal") award(1 - r.control);
   else if (r.phase === "play" && r.revealed.every(Boolean)) award(r.control);
   render();
@@ -649,6 +655,14 @@ function renderSetup() {
         <summary>How it works</summary>
         <ul>
           <li>${g.rounds.length} rounds, each with a survey question. One player from each team faces off: whoever buzzes in first answers.</li>
+          ${
+            g.rounds.some((r) => multiplierOf(r) > 1)
+              ? `<li>Later rounds are worth more: ${g.rounds
+                  .map((r, k) => (multiplierOf(r) > 1 ? `round ${k + 1} is ${multiplierLabel(multiplierOf(r)).toLowerCase()}` : ""))
+                  .filter(Boolean)
+                  .join(", ")}. Nobody's out of it until the end.</li>`
+              : ""
+          }
           <li>The host clicks the answer on the board (or presses its number). Not on the board? Press <b>X</b>.</li>
           <li>The team that wins the face-off plays the board (or passes it). Teammates take turns guessing, and every answer they find adds to the bank.</li>
           <li>Three strikes and the other team gets one guess to steal the whole bank. Clear the board and you keep it.</li>
@@ -747,7 +761,9 @@ function renderRound() {
   const slots = Array.from({ length: count }, (_, i) => answerSlot(i, rd.answers)).join("");
   return `<main class="screen round phase-${r.phase}">
     ${topbar(
-      `<div class="eyebrow">Round ${state.roundIndex + 1} of ${state.game.rounds.length}</div>`,
+      `<div class="eyebrow">Round ${state.roundIndex + 1} of ${state.game.rounds.length}</div>${
+        multiplierOf(rd) > 1 ? `<div class="multiplier">${multiplierLabel(multiplierOf(rd))}</div>` : ""
+      }`,
       `${undoButton()}<button class="btn btn-ghost small" data-action="endMainGame">End game</button>`
     )}
     <div class="stage">

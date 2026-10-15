@@ -14,7 +14,7 @@ The site republishes itself on GitHub Pages whenever you change a file on the `m
 - Once a round is decided you can click any hidden answers to show what was left (no points), then press **Space** for the next round.
 - After the last round, the team with the most points plays **Fast Money**.
 
-Points count at face value in every round.
+Later rounds can be worth more. In Episode 1, rounds 1–2 count at face value, round 3 is **double points** and rounds 4–5 are **triple points**, so a team that falls behind early can still catch up. The bank shows the multiplied total; the answers on the board show the survey numbers.
 
 ### Fast Money
 
@@ -78,6 +78,7 @@ Episode 1 uses real public polls from 2024–2026 (YouGov, Gallup, High Point Un
 | `rounds` | One entry per round, played in order |
 | `question` | The survey question shown above the board |
 | `source` | Optional, e.g. `"YouGov, 2020"`; replaces "We surveyed 100 people" above the board |
+| `multiplier` | Optional, on a round: `2` for double points, `3` for triple. Leave it out for face value |
 | `answers` | Up to 12 answers, each with `answer` and `points`. They're sorted highest first for you, and the board grows past 8 slots when it needs to |
 | `image`, `audio`, `video` | Optional, on a round or a Fast Money question: a file in `media/` (e.g. `"media/logo.png"`) or a link, shown with the question |
 | `fastMoney` | Optional. Leave it out to skip Fast Money |
