@@ -1,0 +1,120 @@
+{
+  "title": "Episode 1",
+  "rounds": [
+    {
+      "question": "Name something people do while they wait for their food at a restaurant.",
+      "answers": [
+        { "answer": "Look at their phone", "points": 34 },
+        { "answer": "Talk", "points": 21 },
+        { "answer": "Eat the bread / chips", "points": 15 },
+        { "answer": "Drink", "points": 11 },
+        { "answer": "People-watch", "points": 7 },
+        { "answer": "Go to the bathroom", "points": 5 },
+        { "answer": "Reread the menu", "points": 3 }
+      ]
+    },
+    {
+      "question": "Name a reason you might leave a party early.",
+      "answers": [
+        { "answer": "Tired", "points": 30 },
+        { "answer": "Not feeling well", "points": 18 },
+        { "answer": "Work in the morning", "points": 16 },
+        { "answer": "Bored", "points": 12 },
+        { "answer": "The kids / babysitter", "points": 9 },
+        { "answer": "Don't know anyone", "points": 6 },
+        { "answer": "Drama / a fight", "points": 5 }
+      ]
+    },
+    {
+      "question": "Name something you'd find in almost any junk drawer.",
+      "answers": [
+        { "answer": "Batteries", "points": 28 },
+        { "answer": "Rubber bands", "points": 18 },
+        { "answer": "Pens", "points": 16 },
+        { "answer": "Tape", "points": 12 },
+        { "answer": "Takeout menus", "points": 9 },
+        { "answer": "Mystery keys", "points": 8 }
+      ]
+    },
+    {
+      "question": "Name something people stretch the truth about on a first date.",
+      "answers": [
+        { "answer": "Age", "points": 32 },
+        { "answer": "Their job", "points": 22 },
+        { "answer": "How much they make", "points": 15 },
+        { "answer": "Hobbies", "points": 10 },
+        { "answer": "Past relationships", "points": 9 }
+      ]
+    },
+    {
+      "question": "Name a food you'd hate to find out was expired after you already ate it.",
+      "answers": [
+        { "answer": "Milk", "points": 41 },
+        { "answer": "Meat / chicken", "points": 22 },
+        { "answer": "Eggs", "points": 14 },
+        { "answer": "Sushi / seafood", "points": 11 }
+      ]
+    }
+  ],
+  "fastMoney": {
+    "goal": 200,
+    "seconds": [20, 25],
+    "questions": [
+      {
+        "question": "Name a pizza topping.",
+        "answers": [
+          { "answer": "Pepperoni", "points": 38 },
+          { "answer": "Sausage", "points": 17 },
+          { "answer": "Mushrooms", "points": 14 },
+          { "answer": "Pineapple", "points": 10 },
+          { "answer": "Olives", "points": 8 },
+          { "answer": "Onions", "points": 6 }
+        ]
+      },
+      {
+        "question": "Name something you bring on a trip to the beach.",
+        "answers": [
+          { "answer": "Sunscreen", "points": 31 },
+          { "answer": "Towel", "points": 26 },
+          { "answer": "Umbrella", "points": 14 },
+          { "answer": "Cooler", "points": 12 },
+          { "answer": "Chair", "points": 8 },
+          { "answer": "A book", "points": 5 }
+        ]
+      },
+      {
+        "question": "Name an animal a lot of people are scared of.",
+        "answers": [
+          { "answer": "Snake", "points": 36 },
+          { "answer": "Spider", "points": 25 },
+          { "answer": "Shark", "points": 17 },
+          { "answer": "Bear", "points": 10 },
+          { "answer": "Alligator", "points": 6 },
+          { "answer": "Rat", "points": 4 }
+        ]
+      },
+      {
+        "question": "Name a number people think is lucky.",
+        "answers": [
+          { "answer": "7", "points": 52 },
+          { "answer": "3", "points": 14 },
+          { "answer": "13", "points": 10 },
+          { "answer": "8", "points": 9 },
+          { "answer": "21", "points": 5 },
+          { "answer": "1", "points": 4 }
+        ]
+      },
+      {
+        "question": "Name the first thing you do when you wake up.",
+        "answers": [
+          { "answer": "Check my phone", "points": 33 },
+          { "answer": "Bathroom", "points": 25 },
+          { "answer": "Brush teeth", "points": 14 },
+          { "answer": "Make coffee", "points": 13 },
+          { "answer": "Stretch", "points": 7 },
+          { "answer": "Hit snooze", "points": 6 }
+        ]
+      }
+    ]
+  }
+}
