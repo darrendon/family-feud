@@ -158,19 +158,19 @@
       "answers": [
         {
           "answer": "Ranch",
-          "points": 30
+          "points": 26
         },
         {
           "answer": "Ketchup",
-          "points": 28
-        },
-        {
-          "answer": "Sriracha",
           "points": 23
         },
         {
+          "answer": "Sriracha",
+          "points": 20
+        },
+        {
           "answer": "Mayo",
-          "points": 19
+          "points": 16
         }
       ]
     }
