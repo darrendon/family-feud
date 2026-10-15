@@ -7,7 +7,7 @@ The site republishes itself on GitHub Pages whenever you change a file on the `m
 ## How a game works
 
 - Name the two teams and, if you like, list each team's players in face-off order. The board shows who's up for each face-off.
-- **Face-off:** read the survey question. One player from each team buzzes in (slap the table). Click the answer they gave on the board, or press its number. If it's not up there, press **X** for the red X — a miss in the face-off doesn't count as a strike. Once you know who won the face-off, click **Team plays** (or press **←** / **→**) for the team that plays the board.
+- **Face-off:** read the survey question out loud. It stays off the board until you press **Show question** (or **Q**), so players have to listen and buzz in. It goes up on its own once a team takes the board. You can turn this off on the team setup screen. One player from each team buzzes in (slap the table). Click the answer they gave on the board, or press its number. If it's not up there, press **X** for the red X — a miss in the face-off doesn't count as a strike. Once you know who won the face-off, click **Team plays** (or press **←** / **→**) for the team that plays the board.
 - **Playing the board:** teammates take turns guessing. Every answer found adds its points to the bank. A miss is a strike; three strikes and the other team gets one chance to steal.
 - **Steal:** the other team talks it over and gives one answer. If it's on the board, click it and they take the whole bank. If not, press **X** and the playing team keeps it.
 - Clear the board and the playing team keeps the bank.
@@ -42,6 +42,7 @@ Click the board once after it opens so the browser lets it play sound. The sound
 
 - **1–9, 0:** reveal that answer on the board (0 is the 10th; click anything past that). In Fast Money, 1–9 picks an answer and 0 is not on the board
 - **X:** red X / strike / steal fails
+- **Q:** show or hide the question on the board
 - **← / →:** in the face-off, the left or right team plays
 - **Space:** next round, start or pause the Fast Money clock, continue
 - **Z:** undo the last thing you clicked (a misclick, an extra strike, the wrong team)

@@ -585,6 +585,45 @@ input:focus {
   box-shadow: var(--shadow);
 }
 
+.survey.waiting {
+  background: linear-gradient(180deg, #fff3cf, var(--cream));
+}
+
+.survey.waiting .survey-q {
+  color: var(--blue);
+  animation: pulse 0.9s ease-in-out infinite alternate;
+}
+
+.survey-tag {
+  display: inline-block;
+  margin-left: 0.5rem;
+  font-family: "Oswald", sans-serif;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background: var(--red);
+  color: #fff;
+  border-radius: 999px;
+  padding: 0.1em 0.6em;
+  vertical-align: 0.15em;
+}
+
+.toggle {
+  display: flex;
+  gap: 0.6rem;
+  align-items: flex-start;
+  cursor: pointer;
+  line-height: 1.4;
+}
+
+.toggle input {
+  width: 1.2rem;
+  height: 1.2rem;
+  margin-top: 0.15rem;
+  flex: none;
+  accent-color: var(--gold);
+}
+
 .survey-label {
   font-family: "Oswald", sans-serif;
   text-transform: uppercase;

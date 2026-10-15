@@ -71,6 +71,7 @@ function freshState() {
     game: null,
     gameId: null,
     teams: [newTeam(), newTeam()],
+    hideQuestions: true, // keep each question off the board until the host shows it
     roundIndex: 0,
     round: null,
     fm: null,
@@ -85,6 +86,7 @@ function freshRound() {
   const n = state.game.rounds[state.roundIndex].answers.length;
   return {
     phase: "faceoff", // faceoff | play | steal | done
+    showQuestion: !state.hideQuestions, // is the question on the board yet?
     revealed: Array(n).fill(false),
     late: Array(n).fill(false), // shown after the round was decided (no points)
     bank: 0,
@@ -205,9 +207,11 @@ async function loadGameById(id) {
 
 function startSetup(game, id) {
   const keep = state.teams.map((t) => newTeam(t.name, [...t.members]));
+  const hideQuestions = state.hideQuestions;
   stopClock();
   state = freshState();
   state.teams = keep;
+  state.hideQuestions = hideQuestions;
   state.game = game;
   state.gameId = id;
   state.screen = "setup";
@@ -261,6 +265,7 @@ function giveControl(team) {
   if (!r || r.phase !== "faceoff") return;
   snapshot();
   r.control = team;
+  r.showQuestion = true;
   r.phase = "play";
   if (r.revealed.every(Boolean)) award(team);
   render();
@@ -435,8 +440,10 @@ const actions = {
   backToLoader: () => {
     stopClock();
     const keep = state.teams.map((t) => newTeam(t.name, [...t.members]));
+    const hideQuestions = state.hideQuestions;
     state = freshState();
     state.teams = keep;
+    state.hideQuestions = hideQuestions;
     undoStack = [];
     clearSaved();
     cue("theme");
@@ -444,6 +451,16 @@ const actions = {
   },
 
   revealAnswer: ({ i }) => revealAnswer(Number(i)),
+  toggleQuestion: () => {
+    const r = state.round;
+    if (!r) return;
+    r.showQuestion = !r.showQuestion;
+    render();
+  },
+  toggleHideQuestions: () => {
+    state.hideQuestions = !state.hideQuestions;
+    render();
+  },
   strike: () => strike(),
   giveControl: ({ team }) => giveControl(Number(team)),
   nextRound: () => {
@@ -756,6 +773,10 @@ function renderSetup() {
       <h2>Meet the families</h2>
       <div class="team-setup">${state.teams.map(teamCard).join('<div class="vs">vs</div>')}</div>
       <p class="muted small">Players are optional. List them in face-off order and the board will show who's up each round.</p>
+      <label class="toggle">
+        <input type="checkbox" data-action="toggleHideQuestions" ${state.hideQuestions ? "checked" : ""} />
+        <span><b>Read the questions out loud.</b> Each question stays off the board until you show it (or a team takes the board), so players have to listen and buzz in.</span>
+      </label>
       <details class="rules">
         <summary>How it works</summary>
         <ul>
@@ -844,8 +865,12 @@ function hostControls() {
   const B = esc(teamName(1));
   if (r.phase === "faceoff") {
     const fo = faceoffName(0) && faceoffName(1) ? `${esc(faceoffName(0))} vs ${esc(faceoffName(1))} · ` : "";
-    return `<div class="host-say">${fo}Face-off! Reveal what they say, then pick who plays.</div>
+    const say = r.showQuestion
+      ? `${fo}Face-off! Reveal what they say, then pick who plays.`
+      : `${fo}Read the question out loud. It's not on the board yet, so first to buzz wins the face-off.`;
+    return `<div class="host-say">${say}</div>
       <div class="row">
+        ${questionButton()}
         <button class="btn btn-team0" data-action="giveControl" data-team="0">← ${A} ${plural(0) ? "play" : "plays"}</button>
         <button class="btn btn-red" data-action="strike">✕ Not on the board (X)</button>
         <button class="btn btn-team1" data-action="giveControl" data-team="1">${B} ${plural(1) ? "play" : "plays"} →</button>
@@ -864,6 +889,24 @@ function hostControls() {
     <div class="row"><button class="btn btn-orange" data-action="nextRound">${isLastRound() ? "Final scores" : "Next round"} (Space)</button></div>`;
 }
 
+// The question card. Until the host shows it, the screen the room sees gets a placeholder:
+// that's the board, or the host screen itself when no board is open.
+function surveyCard(rd, r) {
+  const label = `<span class="survey-label">${rd.source ? `Survey · ${esc(rd.source)}` : "We surveyed 100 people"}</span>`;
+  const roomSees = IS_BOARD || !boardOpen();
+  if (!r.showQuestion && roomSees)
+    return `<div class="survey waiting">${label}<div class="survey-q">Listen up! Hand on the buzzer…</div></div>`;
+  const tag = !IS_BOARD && !r.showQuestion ? `<span class="survey-tag">Not on the board yet</span>` : "";
+  return `<div class="survey">${label}${tag}<div class="survey-q">${esc(rd.question)}</div>${renderMedia(rd)}</div>`;
+}
+
+function questionButton() {
+  const r = state.round;
+  return r.showQuestion
+    ? `<button class="btn btn-ghost" data-action="toggleQuestion" title="Take the question off the board (Q)">Hide question (Q)</button>`
+    : `<button class="btn btn-gold" data-action="toggleQuestion" title="Put the question on the board (Q)">Show question (Q)</button>`;
+}
+
 function renderRound() {
   const rd = currentRound();
   const r = state.round;
@@ -879,11 +922,7 @@ function renderRound() {
     <div class="stage">
       ${teamPanel(0)}
       <section class="board-wrap">
-        <div class="survey">
-          <span class="survey-label">${rd.source ? `Survey · ${esc(rd.source)}` : "We surveyed 100 people"}</span>
-          <div class="survey-q">${esc(rd.question)}</div>
-          ${renderMedia(rd)}
-        </div>
+        ${surveyCard(rd, r)}
         <div class="bank"><span>${r.bank}</span></div>
         <div class="board" style="--rows:${count / 2}">${slots}</div>
       </section>
@@ -1145,6 +1184,7 @@ document.addEventListener("keydown", (e) => {
     if (/^[1-9]$/.test(key)) return revealAnswer(Number(key) - 1);
     if (key === "0") return revealAnswer(9);
     if (key === "x") return strike();
+    if (key === "q") return actions.toggleQuestion();
     if (r.phase === "faceoff" && key === "ArrowLeft") return giveControl(0);
     if (r.phase === "faceoff" && key === "ArrowRight") return giveControl(1);
     if (space && r.phase === "done") {
