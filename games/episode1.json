@@ -152,24 +152,24 @@
       ]
     },
     {
-      "question": "Name what your biggest regret in life is about.",
-      "source": "YouGov, September 2026",
+      "question": "Name the most overrated condiment.",
+      "source": "YouGov, 2025",
       "multiplier": 3,
       "answers": [
         {
-          "answer": "No regrets!",
-          "points": 22
+          "answer": "Ranch",
+          "points": 13
         },
         {
-          "answer": "Love / romance",
-          "points": 15
+          "answer": "Ketchup",
+          "points": 12
         },
         {
-          "answer": "Career / work",
+          "answer": "Sriracha",
           "points": 10
         },
         {
-          "answer": "Family",
+          "answer": "Mayo",
           "points": 8
         }
       ]
