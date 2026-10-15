@@ -152,25 +152,25 @@
       ]
     },
     {
-      "question": "Name how you found out Santa Claus wasn't real.",
-      "source": "YouGov, 2025",
+      "question": "Name what your biggest regret in life is about.",
+      "source": "YouGov, September 2026",
       "multiplier": 3,
       "answers": [
         {
-          "answer": "Figured it out myself",
-          "points": 41
+          "answer": "No regrets!",
+          "points": 22
         },
         {
-          "answer": "A friend / classmate",
+          "answer": "Love / romance",
           "points": 15
         },
         {
-          "answer": "A parent",
-          "points": 11
+          "answer": "Career / work",
+          "points": 10
         },
         {
-          "answer": "A sibling",
-          "points": 11
+          "answer": "Family",
+          "points": 8
         }
       ]
     }
