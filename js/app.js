@@ -1,4 +1,4 @@
-import { playSound, playSoundLater, stopMusic, toggleMute, isMuted, mediaUrl } from "./sounds.js?v=__V__";
+import { playSound, stopMusic, toggleMute, setMuted, isMuted, mediaUrl } from "./sounds.js?v=__V__";
 
 // ---------------------------------------------------------------------------
 // Rules
@@ -11,6 +11,40 @@ const FM_QUESTIONS = 5;
 const FM_GOAL = 200; // Fast Money target, unless the game file sets "goal"
 const FM_SECONDS = [20, 25]; // player 1, player 2, unless the game file sets "seconds"
 const STORE_KEY = "familyfeud.state.v1";
+
+// Two views of one game. The host page (index.html) has every control and, once the board is
+// open, shows the answers too. The board (index.html?view=board) is the tab you cast to the TV:
+// it only shows what the room should see, and it plays the sounds. They talk over a
+// BroadcastChannel, so both need to be open in the same browser on the same computer.
+const IS_BOARD = new URLSearchParams(location.search).get("view") === "board";
+const channel = "BroadcastChannel" in window ? new BroadcastChannel("family-feud") : null;
+const send = (msg) => channel?.postMessage(msg);
+let boardSeenAt = 0; // host: when the board last checked in
+const boardOpen = () => !IS_BOARD && Date.now() - boardSeenAt < 6000;
+let musicNow = null; // host: the looping music that should be playing
+let soundUnlocked = false; // board: browsers only allow sound after a click on the page
+
+const MUSIC = new Set(["theme", "fastMoney", "clock"]);
+
+// Play a sound cue: on the board if it's open (so it comes out of the TV), otherwise here.
+function cue(name) {
+  if (IS_BOARD) return;
+  if (MUSIC.has(name)) musicNow = name;
+  if (name === "winner") musicNow = null;
+  send({ type: "sound", name });
+  if (!boardOpen()) playSound(name);
+}
+
+function cueLater(name, ms) {
+  setTimeout(() => cue(name), ms);
+}
+
+function cueStop() {
+  if (IS_BOARD) return;
+  musicNow = null;
+  send({ type: "stopMusic" });
+  stopMusic();
+}
 const UNDO_LIMIT = 60;
 
 // ---------------------------------------------------------------------------
@@ -61,6 +95,7 @@ function freshRound() {
 }
 
 function save() {
+  if (IS_BOARD) return;
   try {
     if (state.game && state.screen !== "loader") localStorage.setItem(STORE_KEY, JSON.stringify(state));
   } catch {
@@ -177,7 +212,7 @@ function startSetup(game, id) {
   state.gameId = id;
   state.screen = "setup";
   undoStack = [];
-  playSound("theme");
+  cue("theme");
   render();
 }
 
@@ -191,7 +226,7 @@ function revealAnswer(i) {
   snapshot();
   r.revealed[i] = true;
   flipIndex = i;
-  playSound("reveal");
+  cue("reveal");
   if (r.phase === "done") {
     r.late[i] = true; // just showing what was left; no points
     return render();
@@ -236,12 +271,12 @@ function award(team) {
   r.winner = team;
   r.phase = "done";
   state.teams[team].score += r.bank;
-  playSoundLater("win", 650);
+  cueLater("win", 650);
 }
 
 function showX(count) {
   bigX = count;
-  playSound("strike");
+  cue("strike");
   clearTimeout(bigXTimer);
   bigXTimer = setTimeout(() => {
     bigX = null;
@@ -253,7 +288,7 @@ function showX(count) {
 function toSummary() {
   state.round = null;
   state.screen = "summary";
-  playSound("winner");
+  cue("winner");
   render();
 }
 
@@ -271,7 +306,7 @@ function startClock() {
   if (fm.running || fm.timeLeft <= 0) return;
   fm.running = true;
   clockEndsAt = Date.now() + fm.timeLeft * 1000;
-  playSound("clock");
+  cue("clock");
   clock = setInterval(tick, 100);
   render();
 }
@@ -288,7 +323,7 @@ function stopClock() {
   clearInterval(clock);
   clock = null;
   if (state.fm) state.fm.running = false;
-  stopMusic();
+  cueStop();
 }
 
 function tick() {
@@ -298,10 +333,15 @@ function tick() {
   if (left <= 0) {
     fm.timeLeft = 0;
     stopClock();
-    playSound("timer");
+    cue("timer");
     return render();
   }
   fm.timeLeft = left;
+  send({ type: "clock", left });
+  showClock(left);
+}
+
+function showClock(left) {
   const el = document.getElementById("fm-timer");
   if (el) el.textContent = Math.ceil(left);
   const bar = document.getElementById("fm-bar");
@@ -332,7 +372,7 @@ function pickFm(idx) {
   fm.answers[p][q] = { text, points, match: idx };
   saidDraft = "";
   fmFlash = `${p}-${q}`;
-  playSoundLater(points > 0 ? "reveal" : "strike", 700);
+  cueLater(points > 0 ? "reveal" : "strike", 700);
   fm.sel = firstOpenCell(p, q);
   render();
 }
@@ -342,7 +382,7 @@ function fmFinish() {
   fm.phase = "done";
   fm.sel = -1;
   clearSaved();
-  playSoundLater(fmTotal() >= fmGoal() ? "winner" : "strike", 300);
+  cueLater(fmTotal() >= fmGoal() ? "winner" : "strike", 300);
   render();
 }
 
@@ -364,8 +404,8 @@ const actions = {
     state = s;
     if (state.fm) state.fm.running = false; // the clock waits for the host
     undoStack = [];
-    if (state.screen === "setup") playSound("theme");
-    if (state.screen === "fmIntro") playSound("fastMoney");
+    if (state.screen === "setup") cue("theme");
+    if (state.screen === "fmIntro") cue("fastMoney");
     render();
   },
   pickFile: () => document.getElementById("file-input")?.click(),
@@ -389,7 +429,7 @@ const actions = {
     state.round = freshRound();
     state.screen = "round";
     undoStack = [];
-    stopMusic();
+    cueStop();
     render();
   },
   backToLoader: () => {
@@ -399,7 +439,7 @@ const actions = {
     state.teams = keep;
     undoStack = [];
     clearSaved();
-    playSound("theme");
+    cue("theme");
     render();
   },
 
@@ -438,7 +478,7 @@ const actions = {
     const team = leader() ?? 0;
     state.fm = { team, players: fmDefaultPlayers(team), phase: "intro" };
     state.screen = "fmIntro";
-    playSound("fastMoney");
+    cue("fastMoney");
     render();
   },
   setFmTeam: ({ team }) => {
@@ -459,7 +499,7 @@ const actions = {
       answers: [Array(FM_QUESTIONS).fill(null), Array(FM_QUESTIONS).fill(null)],
     });
     state.screen = "fm";
-    stopMusic();
+    cueStop();
     render();
   },
   clockToggle: () => {
@@ -474,7 +514,7 @@ const actions = {
     fm.q = Math.min(FM_QUESTIONS - 1, Math.max(0, fm.q + Number(dir)));
     render();
   },
-  dupe: () => playSound("dupe"),
+  dupe: () => cue("dupe"),
   toReveal: () => {
     const fm = state.fm;
     if (fm.phase !== "p1" && fm.phase !== "p2") return;
@@ -510,7 +550,20 @@ const actions = {
   },
   toggleMute: () => {
     toggleMute();
+    send({ type: "mute", muted: isMuted() });
     render();
+  },
+  openBoard: () => {
+    window.open(`${location.pathname}?view=board`, "feud-board");
+  },
+  unlockSound: () => {
+    if (soundUnlocked) return;
+    soundUnlocked = true;
+    render();
+    send({ type: "hello" }); // ask the host for whatever music should be playing now
+  },
+  fullscreen: () => {
+    document.documentElement.requestFullscreen?.().catch(() => {});
   },
 };
 
@@ -523,15 +576,25 @@ let lastScreen = null;
 function render() {
   const app = document.getElementById("app");
   const view = state.screen + (state.fm?.phase || "");
-  const screens = {
-    loader: renderLoader,
-    setup: renderSetup,
-    round: renderRound,
-    summary: renderSummary,
-    fmIntro: renderFmIntro,
-    fm: renderFm,
-  };
-  app.innerHTML = screens[state.screen]() + renderBigX() + renderMute();
+  const screens = IS_BOARD
+    ? {
+        loader: renderBoardTitle,
+        setup: renderBoardTitle,
+        round: renderRound,
+        summary: renderSummary,
+        fmIntro: renderBoardFmIntro,
+        fm: renderFm,
+      }
+    : {
+        loader: renderLoader,
+        setup: renderSetup,
+        round: renderRound,
+        summary: renderSummary,
+        fmIntro: renderFmIntro,
+        fm: renderFm,
+      };
+  app.innerHTML = screens[state.screen]() + renderBigX() + (IS_BOARD ? renderSoundPrompt() : renderMute());
+  if (!IS_BOARD) send({ type: "state", state, fx: { flip: flipIndex, fmFlash, bigX } });
   flipIndex = null;
   fmFlash = null;
   if (view !== lastScreen) window.scrollTo(0, 0);
@@ -593,8 +656,39 @@ function topbar(middle, buttons = "") {
   return `<header class="topbar">
     ${logo(true)}
     <div class="topbar-info">${middle}</div>
-    <div class="row">${buttons}</div>
+    <div class="row">${IS_BOARD ? "" : boardButton() + buttons}</div>
   </header>`;
+}
+
+function boardButton() {
+  return boardOpen()
+    ? `<button class="btn btn-ghost small board-on" data-action="openBoard" title="The board is open in another tab">📺 Board on</button>`
+    : `<button class="btn btn-gold small" data-action="openBoard" title="Open the board to cast to the TV">📺 Open board</button>`;
+}
+
+// ---- Board-only screens ----
+
+function renderBoardTitle() {
+  const named = state.teams.some((t) => t.name.trim());
+  return `<main class="screen board-title">
+    ${logo()}
+    ${named ? `<div class="matchup"><span class="team-0">${esc(teamName(0))}</span><span class="vs">vs</span><span class="team-1">${esc(teamName(1))}</span></div>` : ""}
+    <p class="muted">${state.game ? esc(state.game.title || "") + " · " : ""}Waiting for the host to start…</p>
+  </main>`;
+}
+
+function renderBoardFmIntro() {
+  const fm = state.fm;
+  return `<main class="screen fm-intro">
+    <div class="fm-title">Fast Money</div>
+    <h1 class="headline">${esc(teamName(fm.team))}</h1>
+    <p class="muted">${esc(fmPlayerName(0))} and ${esc(fmPlayerName(1))} · ${fmGoal()} points to win</p>
+  </main>`;
+}
+
+function renderSoundPrompt() {
+  if (soundUnlocked) return "";
+  return `<button class="sound-prompt" data-action="unlockSound">🔊 Click here once to turn on the board's sound</button>`;
 }
 
 function undoButton() {
@@ -617,6 +711,14 @@ function renderLoader() {
     ${logo()}
     <section class="card">
       ${resume ? `<button class="btn btn-gold wide" data-action="resume">Resume game in progress · ${esc(resume.game.title || "")}</button>` : ""}
+      <div class="board-hint">
+        ${boardButton()}
+        <span class="muted small">${
+          boardOpen()
+            ? "The board is open. Cast that tab to the TV and keep this one for yourself."
+            : "Open the board in a second tab and cast it to the TV. This tab becomes your host screen with all the answers."
+        }</span>
+      </div>
       <h2>Pick an episode</h2>
       <div class="episodes">${games}</div>
       <button class="btn btn-ghost" data-action="pickFile">Load a game file…</button>
@@ -647,7 +749,10 @@ function renderSetup() {
   return `<main class="screen setup">
     ${logo(true)}
     <section class="card card-wide">
-      <p class="eyebrow">${esc(g.title || "Custom game")}</p>
+      <div class="row" style="justify-content:space-between">
+        <p class="eyebrow">${esc(g.title || "Custom game")}</p>
+        ${boardButton()}
+      </div>
       <h2>Meet the families</h2>
       <div class="team-setup">${state.teams.map(teamCard).join('<div class="vs">vs</div>')}</div>
       <p class="muted small">Players are optional. List them in face-off order and the board will show who's up each round.</p>
@@ -719,8 +824,13 @@ function teamPanel(i) {
 function answerSlot(i, answers) {
   const r = state.round;
   if (i >= answers.length) return `<div class="slot blank"></div>`;
-  if (!r.revealed[i])
-    return `<button class="slot hidden" data-action="revealAnswer" data-i="${i}" title="${i < 10 ? `Reveal (${(i + 1) % 10})` : "Reveal"}"><span class="slot-num">${i + 1}</span></button>`;
+  if (!r.revealed[i]) {
+    if (IS_BOARD) return `<div class="slot hidden"><span class="slot-num">${i + 1}</span></div>`;
+    const peek = boardOpen()
+      ? `<span class="peek"><span>${esc(answers[i].answer)}</span><b>${answers[i].points}</b></span>`
+      : "";
+    return `<button class="slot hidden ${peek ? "peeking" : ""}" data-action="revealAnswer" data-i="${i}" title="${i < 10 ? `Reveal (${(i + 1) % 10})` : "Reveal"}"><span class="slot-num">${i + 1}</span>${peek}</button>`;
+  }
   const a = answers[i];
   return `<div class="slot open ${r.late[i] ? "late" : ""} ${flipIndex === i ? "flip" : ""}">
     <span class="slot-text">${esc(a.answer)}</span>
@@ -779,7 +889,7 @@ function renderRound() {
       </section>
       ${teamPanel(1)}
     </div>
-    <footer class="hostbar">${hostControls()}</footer>
+    ${IS_BOARD ? "" : `<footer class="hostbar">${hostControls()}</footer>`}
   </main>`;
 }
 
@@ -800,12 +910,16 @@ function renderSummary() {
         )
         .join("")}
     </div>
-    <div class="row">
+    ${
+      IS_BOARD
+        ? ""
+        : `<div class="row">
       ${undoButton()}
       <button class="btn btn-ghost" data-action="backToLoader">Pick another episode</button>
       <button class="btn btn-ghost" data-action="playAgain">Play this episode again</button>
       ${fm ? `<button class="btn btn-orange" data-action="toFastMoney">Play Fast Money → (Space)</button>` : ""}
-    </div>
+    </div>`
+    }
   </main>`;
 }
 
@@ -868,7 +982,7 @@ function renderFmClock() {
       <div class="fm-qtext">${esc(qs[fm.q].question)}</div>
       ${renderMedia(qs[fm.q])}
     </div>
-    <ol class="fm-qlist">${qs.map((q, i) => `<li class="${i === fm.q ? "on" : ""}">${esc(q.question)}</li>`).join("")}</ol>
+    ${IS_BOARD ? "" : `<ol class="fm-qlist">${qs.map((q, i) => `<li class="${i === fm.q ? "on" : ""}">${esc(q.question)}</li>`).join("")}</ol>
     <footer class="hostbar">
       <div class="host-say">${
         out
@@ -888,14 +1002,14 @@ function renderFmClock() {
         ${p === 1 ? `<button class="btn btn-red" data-action="dupe">Try again (D)</button>` : ""}
         <button class="btn btn-orange" data-action="toReveal">Reveal answers${out ? " (Space)" : ""}</button>
       </div>
-    </footer>
+    </footer>`}
   </main>`;
 }
 
 function fmCell(p, q) {
   const fm = state.fm;
   const cell = fm.answers[p][q];
-  const active = (fm.phase === "r1" || fm.phase === "r2") && p === fmPlayerIndex();
+  const active = !IS_BOARD && (fm.phase === "r1" || fm.phase === "r2") && p === fmPlayerIndex();
   const sel = active && fm.sel === q;
   // Player 2 can't see player 1's answers until their own turn is revealed.
   const hide = p === 1 && fm.phase === "r1";
@@ -959,7 +1073,7 @@ function renderFmBoard() {
       ? `<h1 class="headline">${esc(teamName(fm.team))} ${wins(fm.team)} Fast Money!</h1>${prize ? `<p class="prize">${esc(prize)}</p>` : ""}`
       : `<h1 class="headline">So close!</h1><p class="muted">${goal - total} point${goal - total === 1 ? "" : "s"} short.</p>`
     : "";
-  return `<main class="screen fm reveal ${done ? "fm-done" : ""} ${done && won ? "fm-won" : ""}">
+  return `<main class="screen fm reveal ${done || IS_BOARD ? "fm-done" : ""} ${done && won ? "fm-won" : ""}">
     ${topbar(`<div class="eyebrow">Fast Money · ${esc(teamName(fm.team))}</div>`)}
     ${head}
     <div class="fm-layout">
@@ -968,10 +1082,10 @@ function renderFmBoard() {
         ${Array.from({ length: FM_QUESTIONS }, (_, q) => `<div class="fm-row">${fmCell(0, q)}${fmCell(1, q)}</div>`).join("")}
         <div class="fm-total ${won ? "won" : ""}"><span>Total</span><b>${total}</b><span class="goal">of ${goal}</span></div>
       </section>
-      ${renderPicker()}
+      ${IS_BOARD ? "" : renderPicker()}
     </div>
     ${
-      done
+      done && !IS_BOARD
         ? `<div class="row">
             <button class="btn btn-ghost" data-action="backToLoader">Pick another episode</button>
             <button class="btn btn-orange" data-action="playAgain">Play this episode again</button>
@@ -986,8 +1100,10 @@ function renderFmBoard() {
 // ---------------------------------------------------------------------------
 
 document.addEventListener("click", (e) => {
+  if (IS_BOARD && !soundUnlocked) actions.unlockSound(); // any click on the board turns sound on
   const el = e.target.closest("[data-action]");
   if (!el || el.disabled) return;
+  if (IS_BOARD && !["unlockSound", "fullscreen"].includes(el.dataset.action)) return;
   e.preventDefault();
   const fn = actions[el.dataset.action];
   if (fn) fn(el.dataset);
@@ -1005,6 +1121,10 @@ document.addEventListener("change", async (e) => {
 
 document.addEventListener("keydown", (e) => {
   if (e.metaKey || e.ctrlKey || e.altKey) return;
+  if (IS_BOARD) {
+    if (e.key === "f" || e.key === "F") actions.fullscreen();
+    return;
+  }
   const typing = e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA";
   if (typing) {
     const m = /^member-(\d)$/.exec(e.target.id);
@@ -1068,7 +1188,63 @@ document.addEventListener("keydown", (e) => {
 // Start
 // ---------------------------------------------------------------------------
 
+function listen() {
+  if (!channel) return;
+  channel.onmessage = ({ data: m }) => {
+    if (IS_BOARD) {
+      if (m.type === "state") {
+        state = m.state;
+        flipIndex = m.fx.flip;
+        fmFlash = m.fx.fmFlash;
+        bigX = m.fx.bigX;
+        render();
+      } else if (m.type === "clock") {
+        if (state.fm) state.fm.timeLeft = m.left;
+        showClock(m.left);
+      } else if (m.type === "sound") {
+        if (soundUnlocked) playSound(m.name);
+      } else if (m.type === "stopMusic") {
+        stopMusic();
+      } else if (m.type === "mute") {
+        setMuted(m.muted);
+      }
+      return;
+    }
+    // Host side: the board says hello when it opens and checks in every couple of seconds.
+    if (m.type === "hello" || m.type === "ping") {
+      const wasOpen = boardOpen();
+      boardSeenAt = Date.now();
+      if (m.type === "hello" || !wasOpen) {
+        stopMusic(); // the board takes over the sound
+        send({ type: "mute", muted: isMuted() });
+        if (musicNow) send({ type: "sound", name: musicNow });
+        render(); // sends the current game to the board, and shows the answers here
+      }
+    }
+  };
+}
+
+async function initBoard() {
+  document.title = "Family Feud";
+  listen();
+  render();
+  send({ type: "hello" });
+  setInterval(() => send({ type: "ping" }), 2000);
+}
+
 async function init() {
+  if (IS_BOARD) return initBoard();
+  document.title = "Family Feud · Host";
+  listen();
+  // Notice when the board tab is closed.
+  let wasOpen = false;
+  setInterval(() => {
+    if (boardOpen() !== wasOpen) {
+      wasOpen = boardOpen();
+      const typing = ["INPUT", "TEXTAREA"].includes(document.activeElement?.tagName);
+      if (!typing) render();
+    }
+  }, 2000);
   try {
     const res = await fetch("games/index.json", { cache: "no-cache" });
     gameList = res.ok ? await res.json() : [];

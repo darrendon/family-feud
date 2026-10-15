@@ -24,6 +24,20 @@ Later rounds can be worth more. In Episode 1, rounds 1–2 count at face value, 
 - Player 2 comes back for 25 seconds with Player 1's answers hidden. If they repeat one of Player 1's answers, hit **Try again** (or **D**) for the buzzer. On the reveal screen, an answer Player 1 already used is marked so you can catch duplicates.
 - 200 points between them wins. If Player 1 gets there alone, Player 2 doesn't need to play.
 
+## Host screen and board
+
+The game runs on two tabs in the same browser on one computer:
+
+- **Host screen** (the normal site address): every control, plus all the answers peeking through the hidden tiles so you know what's up there. Keep this one on your laptop.
+- **Board** (press **📺 Open board**, or add `?view=board` to the site address): just what the room should see — revealed answers, the bank, scores, strikes and the big X. This is the tab you cast to the TV.
+
+To put the board on the TV:
+
+- **Chromecast / Google TV:** on the board tab, open Chrome's ⋮ menu → **Cast…**, and under **Sources** choose **Cast tab** (not "Cast screen", which would show your answers).
+- **HDMI or AirPlay as a second display:** drag the board window onto the TV and press **F** on it to go full screen. Use "extend" rather than "mirror".
+
+Click the board once after it opens so the browser lets it play sound. The sounds then come out of the TV instead of your laptop. If the board isn't open, everything still works from the host tab alone, with the answers hidden so you can cast that instead.
+
 ### Host shortcuts
 
 - **1–9, 0:** reveal that answer on the board (0 is the 10th; click anything past that). In Fast Money, 1–9 picks an answer and 0 is not on the board

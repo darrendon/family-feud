@@ -89,6 +89,11 @@ export function toggleMute() {
   return muted;
 }
 
+export function setMuted(value) {
+  muted = Boolean(value);
+  if (muted) stopMusic();
+}
+
 export function isMuted() {
   return muted;
 }
