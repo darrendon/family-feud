@@ -143,51 +143,35 @@
       "answers": [
         {
           "answer": "October",
-          "points": 14
+          "points": 17
         },
         {
           "answer": "December",
-          "points": 11
+          "points": 14
         },
         {
           "answer": "May",
-          "points": 10
+          "points": 12
         },
         {
           "answer": "June",
-          "points": 10
+          "points": 12
         },
         {
           "answer": "April",
-          "points": 8
+          "points": 10
         },
         {
           "answer": "July",
-          "points": 8
+          "points": 10
         },
         {
           "answer": "September",
-          "points": 6
+          "points": 7
         },
         {
           "answer": "November",
-          "points": 5
-        },
-        {
-          "answer": "January",
-          "points": 4
-        },
-        {
-          "answer": "February",
-          "points": 4
-        },
-        {
-          "answer": "March",
-          "points": 4
-        },
-        {
-          "answer": "August",
-          "points": 4
+          "points": 6
         }
       ]
     },
