@@ -152,25 +152,25 @@
       ]
     },
     {
-      "question": "Name a Super Bowl halftime show from the last five years that you enjoyed the most.",
-      "source": "YouGov, 2026",
+      "question": "Name how you found out Santa Claus wasn't real.",
+      "source": "YouGov, 2025",
       "multiplier": 3,
       "answers": [
         {
-          "answer": "Bad Bunny",
+          "answer": "Figured it out myself",
+          "points": 41
+        },
+        {
+          "answer": "A friend / classmate",
           "points": 15
         },
         {
-          "answer": "Dr. Dre, Snoop Dogg & Eminem",
-          "points": 13
+          "answer": "A parent",
+          "points": 11
         },
         {
-          "answer": "Kendrick Lamar",
-          "points": 9
-        },
-        {
-          "answer": "Rihanna",
-          "points": 8
+          "answer": "A sibling",
+          "points": 11
         }
       ]
     }
