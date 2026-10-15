@@ -99,15 +99,15 @@
       "answers": [
         {
           "answer": "Football",
-          "points": 31
+          "points": 32
         },
         {
           "answer": "Basketball",
-          "points": 11
+          "points": 12
         },
         {
           "answer": "Baseball",
-          "points": 10
+          "points": 11
         },
         {
           "answer": "Soccer",
@@ -132,56 +132,60 @@
         {
           "answer": "Golf",
           "points": 1
-        },
-        {
-          "answer": "Wrestling",
-          "points": 1
-        },
-        {
-          "answer": "Figure skating",
-          "points": 1
-        },
-        {
-          "answer": "Tennis",
-          "points": 1
         }
       ]
     },
     {
-      "question": "Name your favorite kind of horror movie.",
-      "source": "YouGov, 2024",
+      "question": "Name your favorite month of the year.",
+      "source": "YouGov, 2025",
       "answers": [
         {
-          "answer": "Psychological",
-          "points": 18
+          "answer": "October",
+          "points": 14
         },
         {
-          "answer": "Comedy horror",
-          "points": 15
-        },
-        {
-          "answer": "Supernatural",
+          "answer": "December",
           "points": 11
         },
         {
-          "answer": "Vampire",
-          "points": 7
+          "answer": "May",
+          "points": 10
         },
         {
-          "answer": "Monster",
+          "answer": "June",
+          "points": 10
+        },
+        {
+          "answer": "April",
+          "points": 8
+        },
+        {
+          "answer": "July",
+          "points": 8
+        },
+        {
+          "answer": "September",
+          "points": 6
+        },
+        {
+          "answer": "November",
           "points": 5
         },
         {
-          "answer": "Zombie",
-          "points": 5
-        },
-        {
-          "answer": "Slasher",
+          "answer": "January",
           "points": 4
         },
         {
-          "answer": "Witchcraft",
-          "points": 3
+          "answer": "February",
+          "points": 4
+        },
+        {
+          "answer": "March",
+          "points": 4
+        },
+        {
+          "answer": "August",
+          "points": 4
         }
       ]
     },
@@ -191,7 +195,7 @@
       "answers": [
         {
           "answer": "Best friend",
-          "points": 26
+          "points": 27
         },
         {
           "answer": "Parent",
@@ -216,10 +220,6 @@
         {
           "answer": "Roommate",
           "points": 2
-        },
-        {
-          "answer": "Servant",
-          "points": 1
         }
       ]
     }
