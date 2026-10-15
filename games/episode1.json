@@ -183,23 +183,39 @@
     ],
     "questions": [
       {
-        "question": "Besides yourself, name someone who makes your meals.",
+        "question": "Name the age you stopped believing in Santa Claus.",
         "source": "YouGov, 2025",
         "answers": [
           {
-            "answer": "Spouse / partner",
-            "points": 54
+            "answer": "10",
+            "points": 11
           },
           {
-            "answer": "Parents",
-            "points": 26
+            "answer": "8",
+            "points": 10
           },
           {
-            "answer": "Roommate",
+            "answer": "7",
+            "points": 8
+          },
+          {
+            "answer": "6",
+            "points": 6
+          },
+          {
+            "answer": "5",
             "points": 5
           },
           {
-            "answer": "Kids",
+            "answer": "9",
+            "points": 5
+          },
+          {
+            "answer": "11",
+            "points": 4
+          },
+          {
+            "answer": "12",
             "points": 4
           }
         ]
