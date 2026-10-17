@@ -32,10 +32,6 @@
         {
           "answer": "M&M's",
           "points": 4
-        },
-        {
-          "answer": "Hershey's",
-          "points": 3
         }
       ]
     },
@@ -117,7 +113,7 @@
       ]
     },
     {
-      "question": "Dog owners: name a word for your relationship to your dog.",
+      "question": "Dog Owners: Name a word you would use to describe your relationship with your dog",
       "source": "YouGov, 2025",
       "multiplier": 3,
       "answers": [

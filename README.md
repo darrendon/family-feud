@@ -14,14 +14,14 @@ The site republishes itself on GitHub Pages whenever you change a file on the `m
 - Once a round is decided you can click any hidden answers to show what was left (no points), then press **Space** for the next round.
 - After the last round, the team with the most points plays **Fast Money**.
 
-Later rounds can be worth more. In Episode 1, rounds 1–2 count at face value, round 3 is **double points** and rounds 4–5 are **triple points**, so a team that falls behind early can still catch up. The bank shows the multiplied total; the answers on the board show the survey numbers.
+Later rounds can be worth more. In Episode 1, rounds 1–2 count at face value, round 3 is **double points** and rounds 4–5 are **triple points**, so a team that falls behind early can still catch up. In those rounds the answers on the board show their doubled or tripled points (a 33 shows as 66 in a double round), so the board always adds up to the bank. The game files keep the plain survey numbers.
 
 ### Fast Money
 
 - Pick the team (the leader is picked for you) and its two players. Player 2 leaves the room.
-- Press **Space** to start Player 1's 20-second clock. Read each question off the screen and press **→** to move on. Someone writes down what they say.
+- The board shows "get ready" with no questions and no clock. Press **▶ Start** (or **Space**) and all five questions and Player 1's 20-second clock go up at the same moment. Press it again to pause: the clock stops and the questions come off the board until you press **▶ Resume**. Read each question off the screen and press **→** to move the highlight to the next one. Someone writes down what they say.
 - When time's up, press **Reveal answers**. For each question, click the survey answer that matches what they said (or press its number), **0** for not on the board, or **P** for a pass. You can type what they actually said so it shows on the board.
-- Player 2 comes back for 25 seconds with Player 1's answers hidden. If they repeat one of Player 1's answers, hit **Try again** (or **D**) for the buzzer. On the reveal screen, an answer Player 1 already used is marked so you can catch duplicates.
+- Player 2 comes back for 25 seconds with Player 1's answers hidden, and starts the same way with **▶ Start**. If they give the same answer as Player 1, hit **Duplicate answer** (or **D**) for the "eh-eh" buzzer and they try again. On the reveal screen, an answer Player 1 already used is marked so you can catch duplicates.
 - 200 points between them wins. If Player 1 gets there alone, Player 2 doesn't need to play.
 
 ## Host screen and board
@@ -44,7 +44,8 @@ Click the board once after it opens so the browser lets it play sound. The sound
 - **X:** red X / strike / steal fails
 - **Q:** show or hide the question on the board
 - **← / →:** in the face-off, the left or right team plays
-- **Space:** next round, start or pause the Fast Money clock, continue
+- **Space:** next round, Fast Money **Start** / pause (clock and questions together), continue
+- **D:** Fast Money duplicate-answer buzzer, when Player 2 repeats Player 1's answer
 - **Z:** undo the last thing you clicked (a misclick, an extra strike, the wrong team)
 - **M:** mute or unmute
 
@@ -127,7 +128,7 @@ Drop audio files into `sounds/` with these names, or change the names at the top
 | `round-win.mp3` | A team banks the round's points |
 | `fast-money.mp3` | Fast Money intro (loops) |
 | `clock.mp3` | While the Fast Money clock runs (loops) |
-| `try-again.mp3` | Duplicate answer in Fast Money |
+| `try-again.mp3` | Duplicate answer in Fast Money (built-in fallback: an "eh-eh" double buzz) |
 | `times-up.mp3` | The clock runs out |
 | `winner.mp3` | Final results |
 

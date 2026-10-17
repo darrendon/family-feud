@@ -14,7 +14,7 @@ const SOUND_FILES = {
   reveal: "ding.mp3", // an answer flips over on the board
   strike: "strike.mp3", // the big red X
   win: "round-win.mp3", // a team banks the round's points
-  dupe: "try-again.mp3", // Fast Money: player 2 repeated an answer
+  dupe: "try-again.mp3", // Fast Money: player 2 repeated an answer (the "eh-eh" buzzer)
   timer: "times-up.mp3", // Fast Money: the clock runs out
   winner: "winner.mp3", // final results
 };
@@ -103,7 +103,8 @@ const TONES = {
   reveal: [[988, 0, 0.5]],
   strike: [[110, 0, 0.7]],
   win: [[523, 0, 0.12], [659, 0.12, 0.12], [784, 0.24, 0.12], [1047, 0.36, 0.4]],
-  dupe: [[440, 0, 0.18], [440, 0.26, 0.18]],
+  // The "eh-eh" duplicate-answer buzzer: two short, low buzzes, each two slightly clashing notes.
+  dupe: [[165, 0, 0.26], [175, 0, 0.26], [165, 0.36, 0.26], [175, 0.36, 0.26]],
   timer: [[220, 0, 1.1]],
   winner: [[523, 0, 0.15], [659, 0.15, 0.15], [784, 0.3, 0.15], [1047, 0.45, 0.7]],
 };
@@ -115,13 +116,16 @@ function synth(name) {
     ctx = ctx || new (window.AudioContext || window.webkitAudioContext)();
     const t0 = ctx.currentTime + 0.02;
     const harsh = name === "strike" || name === "timer";
+    const buzz = name === "dupe";
     for (const [freq, start, len] of notes) {
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
-      osc.type = harsh ? "sawtooth" : name === "dupe" ? "square" : "sine";
+      osc.type = harsh || buzz ? "sawtooth" : "sine";
       osc.frequency.value = freq;
       gain.gain.setValueAtTime(0.0001, t0 + start);
-      gain.gain.exponentialRampToValueAtTime(harsh ? 0.14 : 0.25, t0 + start + 0.02);
+      gain.gain.exponentialRampToValueAtTime(harsh ? 0.14 : buzz ? 0.1 : 0.25, t0 + start + 0.02);
+      // A buzzer holds its volume and cuts off; the other tones fade out.
+      if (buzz) gain.gain.setValueAtTime(0.1, t0 + start + len - 0.03);
       gain.gain.exponentialRampToValueAtTime(0.0001, t0 + start + len);
       osc.connect(gain).connect(ctx.destination);
       osc.start(t0 + start);

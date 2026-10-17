@@ -1083,29 +1083,63 @@ input:focus {
   background: var(--gold);
 }
 
+.fm-clock.paused #fm-timer {
+  opacity: 0.6;
+}
+
+/* Before Start (and while paused) the room sees this instead of the clock or the questions */
+.fm-waiting {
+  text-align: center;
+}
+
+.fm-ready {
+  font-family: "Bowlby One", sans-serif;
+  font-size: 2.4rem;
+  line-height: 1.1;
+  color: var(--gold);
+  animation: pulse 0.9s ease-in-out infinite alternate;
+}
+
 .fm-q {
   text-align: center;
   max-width: 900px;
-}
-
-.fm-qtext {
-  font-weight: 800;
-  font-size: 2.1rem;
-  line-height: 1.2;
-}
-
-.fm-qlist {
-  margin: 0;
-  padding-left: 1.4rem;
-  max-width: 720px;
   width: 100%;
-  color: rgba(255, 247, 230, 0.55);
-  line-height: 1.6;
 }
 
-.fm-qlist li.on {
-  color: var(--gold);
+/* All five questions go up together when the clock starts */
+.fm-allq {
+  margin: 0.4rem 0 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: fmq;
+  display: grid;
+  gap: 0.4rem;
+  text-align: left;
+}
+
+.fm-allq li {
+  counter-increment: fmq;
+  display: flex;
+  align-items: baseline;
+  gap: 0.8rem;
   font-weight: 800;
+  font-size: 1.7rem;
+  line-height: 1.2;
+  padding: 0.3rem 0.8rem;
+  border: 2px solid transparent;
+  border-radius: 10px;
+}
+
+.fm-allq li::before {
+  content: counter(fmq);
+  font-family: "Bowlby One", sans-serif;
+  color: var(--gold);
+  min-width: 1.1em;
+}
+
+.fm-allq li.on {
+  border-color: var(--gold);
+  background: rgba(255, 201, 60, 0.12);
 }
 
 .answering .hostbar {
@@ -1428,7 +1462,7 @@ kbd {
     font-size: 4.5rem;
   }
 
-  .fm-qtext {
-    font-size: 1.5rem;
+  .fm-allq li {
+    font-size: 1.2rem;
   }
 }

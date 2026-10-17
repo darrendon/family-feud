@@ -143,6 +143,8 @@ const wins = (i) => (plural(i) ? "win" : "wins");
 const currentRound = () => state.game.rounds[state.roundIndex];
 // Later rounds can be worth double or triple: the bank counts each answer's points that many times.
 const multiplierOf = (round) => round.multiplier || 1;
+// What an answer is worth this round. The tiles show this number too, so the board adds up to the bank.
+const answerPoints = (round, i) => round.answers[i].points * multiplierOf(round);
 const MULTIPLIER_NAMES = { 2: "Double", 3: "Triple" };
 const multiplierLabel = (m) => `${MULTIPLIER_NAMES[m] || `${m}×`} points`;
 const isLastRound = () => state.roundIndex >= state.game.rounds.length - 1;
@@ -235,7 +237,7 @@ function revealAnswer(i) {
     r.late[i] = true; // just showing what was left; no points
     return render();
   }
-  r.bank += currentRound().answers[i].points * multiplierOf(currentRound());
+  r.bank += answerPoints(currentRound(), i);
   if (r.phase === "steal") award(1 - r.control);
   else if (r.phase === "play" && r.revealed.every(Boolean)) award(r.control);
   render();
@@ -842,20 +844,21 @@ function teamPanel(i) {
   </aside>`;
 }
 
-function answerSlot(i, answers) {
+function answerSlot(i, rd) {
   const r = state.round;
+  const answers = rd.answers;
   if (i >= answers.length) return `<div class="slot blank"></div>`;
   if (!r.revealed[i]) {
     if (IS_BOARD) return `<div class="slot hidden"><span class="slot-num">${i + 1}</span></div>`;
     const peek = boardOpen()
-      ? `<span class="peek"><span>${esc(answers[i].answer)}</span><b>${answers[i].points}</b></span>`
+      ? `<span class="peek"><span>${esc(answers[i].answer)}</span><b>${answerPoints(rd, i)}</b></span>`
       : "";
     return `<button class="slot hidden ${peek ? "peeking" : ""}" data-action="revealAnswer" data-i="${i}" title="${i < 10 ? `Reveal (${(i + 1) % 10})` : "Reveal"}"><span class="slot-num">${i + 1}</span>${peek}</button>`;
   }
   const a = answers[i];
   return `<div class="slot open ${r.late[i] ? "late" : ""} ${flipIndex === i ? "flip" : ""}">
     <span class="slot-text">${esc(a.answer)}</span>
-    <span class="slot-pts">${a.points}</span>
+    <span class="slot-pts">${answerPoints(rd, i)}</span>
   </div>`;
 }
 
@@ -911,7 +914,7 @@ function renderRound() {
   const rd = currentRound();
   const r = state.round;
   const count = Math.max(MIN_SLOTS, rd.answers.length + (rd.answers.length % 2)); // two even columns
-  const slots = Array.from({ length: count }, (_, i) => answerSlot(i, rd.answers)).join("");
+  const slots = Array.from({ length: count }, (_, i) => answerSlot(i, rd)).join("");
   return `<main class="screen round phase-${r.phase}">
     ${topbar(
       `<div class="eyebrow">Round ${state.roundIndex + 1} of ${state.game.rounds.length}</div>${
@@ -1010,35 +1013,53 @@ function renderFmClock() {
   const secs = fmSeconds(p);
   const out = fm.timeLeft <= 0;
   const left = Math.ceil(fm.timeLeft);
-  return `<main class="screen fm answering">
-    ${topbar(`<div class="eyebrow">Fast Money · ${esc(fmPlayerName(p))}</div>`, undoButton())}
-    <div class="fm-clock ${out ? "out" : ""} ${fm.running ? "running" : ""}">
+  // Start is one toggle: the clock and all five questions go up together, and Pause takes the
+  // questions down again until the clock restarts. The host's own screen (with the board open)
+  // keeps the questions, marked as not on the board yet.
+  const started = fm.running || fm.timeLeft < secs;
+  const live = fm.running || out;
+  const roomSees = IS_BOARD || !boardOpen();
+  const clockHtml = started
+    ? `<div class="fm-clock ${out ? "out" : ""} ${fm.running ? "running" : "paused"}">
       <span id="fm-timer">${out ? "0" : left}</span>
       <div class="fm-bar"><div id="fm-bar" style="width:${(fm.timeLeft / secs) * 100}%"></div></div>
-    </div>
-    <div class="fm-q">
-      <div class="eyebrow">Question ${fm.q + 1} of ${FM_QUESTIONS}</div>
-      <div class="fm-qtext">${esc(qs[fm.q].question)}</div>
-      ${renderMedia(qs[fm.q])}
-    </div>
-    ${IS_BOARD ? "" : `<ol class="fm-qlist">${qs.map((q, i) => `<li class="${i === fm.q ? "on" : ""}">${esc(q.question)}</li>`).join("")}</ol>
-    <footer class="hostbar">
+    </div>`
+    : `<div class="fm-waiting">
+      <div class="fm-ready">${esc(fmPlayerName(p))}, get ready!</div>
+      <div class="muted">${FM_QUESTIONS} questions · ${secs} seconds</div>
+    </div>`;
+  const questions = `<ol class="fm-allq">${qs
+    .map((q, i) => `<li class="${i === fm.q ? "on" : ""}"><span>${esc(q.question)}</span></li>`)
+    .join("")}</ol>${renderMedia(qs[fm.q])}`;
+  const qHtml =
+    live || !roomSees
+      ? `${!live ? `<span class="survey-tag">Not on the board yet</span>` : ""}${questions}`
+      : started
+      ? `<div class="fm-waiting"><div class="fm-ready">Paused</div></div>`
+      : "";
+  return `<main class="screen fm answering">
+    ${topbar(`<div class="eyebrow">Fast Money · ${esc(fmPlayerName(p))}</div>`, undoButton())}
+    ${clockHtml}
+    <div class="fm-q">${qHtml}</div>
+    ${IS_BOARD ? "" : `<footer class="hostbar">
       <div class="host-say">${
         out
           ? "Time! Now reveal the answers."
+          : !started
+          ? `Press <b>Start</b>: the clock and all ${FM_QUESTIONS} questions go up at the same moment.${p === 1 ? " Player 1's answers stay hidden." : ""}`
           : p === 1
-          ? `Player 1's answers stay hidden. Repeat one? Hit <b>Try again</b>.`
-          : "Read each question; write down what they say. Use → for the next one."
+          ? `Player 1's answers stay hidden. Same answer as Player 1? Hit <b>Duplicate</b> for the buzzer.`
+          : "Read each question; write down what they say. Use → to move to the next one."
       }</div>
       <div class="row">
         <button class="btn btn-ghost" data-action="fmNav" data-dir="-1" ${fm.q === 0 ? "disabled" : ""}>←</button>
         ${
           out
             ? ""
-            : `<button class="btn ${fm.running ? "btn-ghost" : "btn-gold"}" data-action="clockToggle">${fm.running ? "Pause clock" : left < secs ? "Resume clock" : "Start the clock"} (Space)</button>`
+            : `<button class="btn ${fm.running ? "btn-ghost" : "btn-gold"}" data-action="clockToggle" aria-pressed="${fm.running}">${fm.running ? "❚❚ Pause" : started ? "▶ Resume" : "▶ Start"} (Space)</button>`
         }
         <button class="btn btn-ghost" data-action="fmNav" data-dir="1" ${fm.q === FM_QUESTIONS - 1 ? "disabled" : ""}>→</button>
-        ${p === 1 ? `<button class="btn btn-red" data-action="dupe">Try again (D)</button>` : ""}
+        ${p === 1 ? `<button class="btn btn-red" data-action="dupe" title="Same answer as Player 1: plays the eh-eh buzzer">✕✕ Duplicate answer (D)</button>` : ""}
         <button class="btn btn-orange" data-action="toReveal">Reveal answers${out ? " (Space)" : ""}</button>
       </div>
     </footer>`}
